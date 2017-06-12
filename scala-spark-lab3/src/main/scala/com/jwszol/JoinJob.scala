@@ -27,11 +27,8 @@ class JoinJob {
     tempdfUsers.createOrReplaceTempView("users_view")
 
     sparkSession.sql("select * from users_view").show()
-  }
-
-   def addValueToId[T] (ds:Dataset[T]) : Unit ={
-
-     ds.printSchema()
+    val joinDs = transactions.join(users, transactions.col("user_id").equalTo(users.col("id")),"leftouter")
+    joinDs.show()
   }
 
 }

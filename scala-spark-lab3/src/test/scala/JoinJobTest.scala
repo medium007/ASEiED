@@ -7,7 +7,7 @@ import org.scalatest.{FunSpec, GivenWhenThen}
 class JoinJobTest extends FunSpec with GivenWhenThen {
 
   describe("JoinJobTest") {
-    var jj = new JoinJob()
+    val jj = new JoinJob
     jj.joinData
   }
 
