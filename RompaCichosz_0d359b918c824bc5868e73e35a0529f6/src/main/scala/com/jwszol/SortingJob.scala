@@ -2,6 +2,7 @@ package com.jwszol
 import org.apache.spark.sql.{Dataset, SparkSession}
 import org.apache.spark.sql.functions.col
 import org.apache.spark.sql.SparkSession
+import org.apache.spark.sql.functions.explode
 
 class SortingJob {
 
@@ -13,13 +14,13 @@ class SortingJob {
   val path = "./src/main/resources/dataMay-31-2017.json"
   val MapPartRDD = sparkSession.sparkContext.wholeTextFiles(path).values
   val rawData = sparkSession.read.json(MapPartRDD)
-  var WrappedArray = rawData.head().getList(1)
-  var pairs  = WrappedArray.toArray   //(id, value)
+  val extractedPairs = rawData.withColumn("data", explode(rawData.col("data")))
 
   def selectionSort: Unit = {
 
     println("test")
-    rawData.show()
+    extractedPairs.printSchema()
+    extractedPairs.show()
 
   }
 }
