@@ -11,15 +11,15 @@ class SortingJob {
     .config("spark.some.config.option", "some-value")
     .getOrCreate()
   val path = "./src/main/resources/dataMay-31-2017.json"
-  val data = sparkSession.read.json(sparkSession.sparkContext.wholeTextFiles(path).values)
-  var wrapped= data.head().getList(1)
-  var newWrap  = wrapped.toArray   //zawiera w sobie 2 wartosci, id i value
-
+  val MapPartRDD = sparkSession.sparkContext.wholeTextFiles(path).values
+  val rawData = sparkSession.read.json(MapPartRDD)
+  var WrappedArray = rawData.head().getList(1)
+  var pairs  = WrappedArray.toArray   //(id, value)
 
   def selectionSort: Unit = {
 
     println("test")
-
+    rawData.show()
 
   }
 }
