@@ -10,7 +10,11 @@ class SortingJob {
     .appName("spark session example")
     .config("spark.some.config.option", "some-value")
     .getOrCreate()
-    val df = sparkSession.read.json("./src/main/resources/dataMay-31-2017.json")
+  val path = "./src/main/resources/dataMay-31-2017.json"
+  val data = sparkSession.read.json(sparkSession.sparkContext.wholeTextFiles(path).values)
+  var wrapped= data.head().getList(1)
+  var newWrap  = wrapped.toArray   //zawiera w sobie 2 wartosci, id i value
+
 
   def selectionSort: Unit = {
 
