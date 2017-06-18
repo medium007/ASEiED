@@ -22,23 +22,24 @@ class SortingJob {
   extractedPairs.createOrReplaceTempView("pairs_view")
 
   def selectionSort: Unit = {
-    val t0 = System.currentTimeMillis()
-    println("Selection sort clock started ...")
-
     var splittedPairs = sparkSession.sql("SELECT cast(data[0] as integer) as id, cast(data[1] as float) as value FROM pairs_view")
     splittedPairs.createOrReplaceTempView("source_table")
     val len = splittedPairs.count().toInt
     //println(splittedPairs.rdd.getNumPartitions)
     var minRecord = sparkSession.sql("SELECT * FROM source_table ORDER BY value").limit(1)
     var output_table = minRecord.select("id", "value")
+    output_table.createOrReplaceTempView("output_table")
 
     for(i <- 2 until (len)) {
-      minRecord = sparkSession.sql("SELECT * FROM source_table ORDER BY value").limit(i)
+      minRecord = sparkSession.sql("SELECT * FROM source_table EXCEPT SELECT * FROM output_table")
       minRecord.createOrReplaceTempView("tmp")
       minRecord = sparkSession.sql("SELECT * FROM tmp WHERE value=(SELECT MAX(value) FROM tmp)")
       output_table = output_table.union(minRecord)
+      output_table.createOrReplaceTempView("output_table")
+
     }
 
+    output_table.show()
     val outputFile = output_table.toJSON.collect()
     val path = "./src/main/resources/"
     val writer = new PrintWriter(new File(path + "selectionSortOutput.json" ))
@@ -49,11 +50,6 @@ class SortingJob {
       }
 
     writer.close()
-    val t1 = System.currentTimeMillis()
-    println("Selection sort done. Execution time: " + (t1 - t0) + " ms")
-
-    output_table.show()
 
   }
-
 }

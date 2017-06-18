@@ -1,4 +1,4 @@
 # ASEiED
 
-## Algorytm quicksort oraz selection sort
+## Quicksort and selection sort algorithm comparision
 
