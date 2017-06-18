@@ -1,10 +1,6 @@
-package com.jwszol
-import org.apache.spark.sql.{Dataset, SparkSession}
-import org.apache.spark.sql.functions.col
+package com.aseproject
 import org.apache.spark.sql.SparkSession
 import org.apache.spark.sql.functions.explode
-import org.apache.spark.sql.Column
-import org.apache.spark.sql.functions._
 import java.io._
 
 class SortingJob {

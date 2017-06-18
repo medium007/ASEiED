@@ -1,4 +1,4 @@
-import com.jwszol.SortingJob
+import com.aseproject.SortingJob
 import org.scalatest.{FunSpec, GivenWhenThen}
 import org.apache.log4j.Logger
 import org.apache.log4j.Level
