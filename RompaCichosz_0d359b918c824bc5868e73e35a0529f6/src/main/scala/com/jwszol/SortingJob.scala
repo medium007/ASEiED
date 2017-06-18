@@ -56,4 +56,25 @@ class SortingJob {
 
   }
 
+  def sparkPureSort: Unit = {
+    val t0 = System.currentTimeMillis()
+    println("Spark pure sort clock started ...")
+    var splittedPairs = sparkSession.sql("SELECT cast(data[0] as integer) as id, cast(data[1] as float) as value FROM pairs_view ORDER BY value")
+
+    val outputFile = splittedPairs.toJSON.collect()
+    val path = "./src/main/resources/"
+    val writer = new PrintWriter(new File(path + "sparkPureSortOutput.json" ))
+
+    for(l <- outputFile)
+    {
+      writer.println(l)
+    }
+
+    writer.close()
+
+    val t1 = System.currentTimeMillis()
+    println("Pure spark sort done. Execution time: " + (t1 - t0) + " ms")
+
+
+  }
 }

@@ -9,8 +9,10 @@ class SortingJobTest extends FunSpec with GivenWhenThen {
   Logger.getLogger("akka").setLevel(Level.OFF)
 
   describe("SortingJobTest") {
-    val jj = new SortingJob
-    jj.selectionSort
+    val sj = new SortingJob
+    sj.selectionSort
+    sj.sparkPureSort
+
   }
 
 }
