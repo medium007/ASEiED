@@ -12,6 +12,7 @@ class SortingJobTest extends FunSpec with GivenWhenThen {
     val sj = new SortingJob
     sj.selectionSort
     sj.sparkPureSort
+    sj.quickSortMaint
 
   }
 
