@@ -31,7 +31,7 @@ class SortingJob {
     var output_table = sparkSession.sql("SELECT * FROM source_table WHERE value=(SELECT MIN(value) FROM source_table)")
     // var -> union
 
-    for(i <- 2 until (len)) {
+    for(i <- 2 until (len + 1)) {
       sparkSession.sql("SELECT * FROM source_table ORDER BY value").limit(i).createOrReplaceTempView("tmp")
       output_table = output_table.union(sparkSession.sql("SELECT * FROM tmp WHERE value=(SELECT MAX(value) FROM tmp)"))
     }
