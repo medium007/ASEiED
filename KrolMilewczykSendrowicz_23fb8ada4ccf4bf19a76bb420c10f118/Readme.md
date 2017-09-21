@@ -1,4 +1,4 @@
-To run this project you need a Maven installed.
+To run this project you need to have a Maven installed.
 
 In IDE choose "Clean and Build"
 
